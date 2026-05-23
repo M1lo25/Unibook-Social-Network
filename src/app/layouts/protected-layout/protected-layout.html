@@ -4,6 +4,7 @@
 
     <nav class="app-nav" aria-label="Navigazione principale">
       <a routerLink="/home" routerLinkActive="nav-link--active" class="nav-link">Home</a>
+      <a routerLink="/profile" routerLinkActive="nav-link--active" class="nav-link">Profilo</a>
       @if (currentUser(); as user) {
       <p class="user-chip">{{ user.firstName }} {{ user.lastName }}</p>
       }

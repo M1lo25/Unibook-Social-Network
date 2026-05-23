@@ -1,0 +1,84 @@
+<section class="profile-page" [attr.aria-busy]="isProfileLoading()">
+  @if (isProfileLoading()) {
+  <p class="status-box" role="status">Caricamento profilo...</p>
+  }
+
+  @if (profileError()) {
+  <div class="status-box status-box--error" role="alert">
+    <p>{{ profileError() }}</p>
+    <button type="button" class="button-secondary" (click)="reloadProfile()" [disabled]="isProfileLoading()">
+      Riprova
+    </button>
+  </div>
+  }
+
+  @if (isProfileEmpty()) {
+  <p class="status-box" role="status">Nessun dato profilo disponibile.</p>
+  }
+
+  @if (profileUser(); as user) {
+  <header class="panel profile-header">
+    <div class="profile-avatar">
+      @if (user.avatarUrl) {
+      <img [src]="user.avatarUrl" [alt]="'Foto profilo di ' + user.firstName + ' ' + user.lastName" />
+      } @else {
+      <span>{{ profileInitials() }}</span>
+      }
+    </div>
+
+    <div>
+      <p class="eyebrow">Profilo</p>
+      <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+      <p class="copy">
+        {{ user.bio || 'Non hai ancora inserito una bio.' }}
+      </p>
+    </div>
+  </header>
+
+  <div class="grid">
+    <article class="panel">
+      <h2>Informazioni personali</h2>
+      <dl>
+        <div>
+          <dt>Nome</dt>
+          <dd>{{ user.firstName }} {{ user.lastName }}</dd>
+        </div>
+        <div>
+          <dt>Email</dt>
+          <dd>{{ user.email }}</dd>
+        </div>
+        <div>
+          <dt>Data di nascita</dt>
+          <dd>{{ user.birthDate }}</dd>
+        </div>
+        <div>
+          <dt>ID utente</dt>
+          <dd>{{ user.id }}</dd>
+        </div>
+      </dl>
+    </article>
+
+    <article class="panel">
+      <h2>Profilo pubblico</h2>
+      <dl>
+        <div>
+          <dt>Follower</dt>
+          <dd>{{ user.followersCount }}</dd>
+        </div>
+        <div>
+          <dt>Utenti seguiti</dt>
+          <dd>{{ user.followingCount }}</dd>
+        </div>
+        <div>
+          <dt>Foto profilo</dt>
+          <dd>{{ user.avatarUrl ? 'Presente' : 'Non impostata' }}</dd>
+        </div>
+        <div>
+          <dt>Bio</dt>
+          <dd>{{ user.bio || 'Non impostata' }}</dd>
+        </div>
+      </dl>
+    </article>
+  </div>
+  }
+</section>
